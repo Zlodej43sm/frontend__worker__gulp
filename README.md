@@ -1,5 +1,5 @@
 ## Gulp frontend builder  
-Gulp, Babel, SASS
+Gulp, Babel, SASS, PostCSS
 
 ### Usage
 

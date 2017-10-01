@@ -1,35 +1,43 @@
+import babelify from 'babelify';
+import browserify from 'browserify';
 import gulp from 'gulp';
 import tap from 'gulp-tap';
 import sass from 'gulp-sass';
 import gutil from 'gulp-util';
 import clean from 'gulp-clean';
-import newer from 'gulp-newer';
 import uglify from 'gulp-uglify';
 import buffer from 'gulp-buffer';
+import postcss from 'gulp-postcss';
 import sourcemaps from 'gulp-sourcemaps';
-import autoprefixer from 'gulp-autoprefixer';
-import babelify from 'babelify';
-import browserify from 'browserify';
-import es2015 from 'babel-preset-es2015';
 
-const frontendPath = '../theme/';
-const src = {
-    scripts: '/js/source',
-    styles: '/scss'
-};
-const dest = {
-    scripts: '/js/compiled',
-    styles: '/css'
-};
+const frontendPath = '../theme/',
+    src = {
+        scripts: '/js/source',
+        styles: '/scss'
+    },
+        dest = {
+        scripts: '/js/compiled',
+        styles: '/css'
+    };
+
+let processors = [
+        require("postcss-url")(),
+        require("postcss-cssnext")(),
+        require("cssnano")({ autoprefixer: false }),
+        require("postcss-browser-reporter")(),
+        require("postcss-reporter")(),
+    ],
+    presets = [
+        require("babel-preset-env")
+    ];
 
 // Compile & build bundle 'ES6' into pure 'ES5'script, using Babel
 gulp.task('scripts', () => {
     gulp.src(`${frontendPath}${src.scripts}/**/*.js`, {read: false})
-        // .pipe(newer(`${frontendPath}${dest.scripts}`))
         .pipe(tap(function (file) {
             gutil.log('bundling ' + file.path);
             file.contents = browserify(file.path, {debug: true})
-                .transform(babelify, {presets: [es2015]})
+                .transform(babelify, {presets: presets})
                 .bundle();
         }))
         .pipe(buffer())
@@ -57,7 +65,7 @@ gulp.task('scripts:c', () => {
 gulp.task('styles', () => {
     gulp.src(`${frontendPath}${src.styles}/**/*.scss`)
         .pipe(sass({includePaths: 'bower_components/compass-mixins/lib', outputStyle: 'compressed'}))
-        .pipe(autoprefixer())
+        .pipe(postcss(processors))
         .pipe(gulp.dest(`${frontendPath}${dest.styles}/`));
 });
 
