@@ -79,5 +79,5 @@ gulp.task('styles:w', ['styles'], () => {
 
 
 gulp.task('watch', ['styles:w', 'scripts:w']);
-gulp.task('build', ['clean', 'styles', 'scripts']);
+gulp.task('build', ['scripts:c', 'styles', 'scripts']);
 gulp.task('default', ['build', 'watch']);
