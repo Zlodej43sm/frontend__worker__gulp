@@ -1,0 +1,26 @@
+{
+  "name": "theme_worker",
+  "version": "1.0.0",
+  "description": "Magento theme worker. Build & watch theme frontend files",
+  "main": "gulpfile.babel.js",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-buffer": "0.0.2",
+    "gulp-clean": "^0.3.2",
+    "gulp-newer": "^1.3.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-tap": "^1.0.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alec Povolotskiy <aleksey.povolotskiy@vaimo.com>",
+  "license": "ISC"
+}
