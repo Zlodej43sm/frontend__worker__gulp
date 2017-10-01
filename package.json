@@ -1,7 +1,7 @@
 {
-  "name": "theme_worker",
+  "name": "frontend_worker",
   "version": "1.0.0",
-  "description": "Magento theme worker. Build & watch theme frontend files",
+  "description": "Frontend worker. Build & watch frontend files",
   "main": "gulpfile.babel.js",
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
@@ -21,6 +21,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Alec Povolotskiy <aleksey.povolotskiy@vaimo.com>",
-  "license": "ISC"
+  "author": "Alec Povolotskiy <a.povolotskiy@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/Zlodej43sm/frontend__worker__gulp",
+  "repository": {
+    "type": "git",
+    "url": "https://https://github.com/Zlodej43sm/frontend__worker__gulp.git"
+  }
 }
