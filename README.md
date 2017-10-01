@@ -1,13 +1,13 @@
-## Gulp theme builder  
+## Gulp frontend builder  
 Gulp, Babel, SASS
 
 ### Usage
 
 #### Theme setup
-Set you theme path in 'themePath' (gulp.babel.js), src & dest.
+Set you frontend path in 'frontendPath' (gulp.babel.js), src & dest.
 Example:
 ```javascript
-const themePath = 'youFrontendTheme';
+const frontendPath = 'youFrontendTheme';
 const src = {
     scripts: '/scripts/source',
     styles: '/styles/source'

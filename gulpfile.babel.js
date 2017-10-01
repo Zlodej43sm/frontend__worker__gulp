@@ -12,7 +12,7 @@ import babelify from 'babelify';
 import browserify from 'browserify';
 import es2015 from 'babel-preset-es2015';
 
-const themePath = '../theme/';
+const frontendPath = '../theme/';
 const src = {
     scripts: '/js/source',
     styles: '/scss'
@@ -24,8 +24,8 @@ const dest = {
 
 // Compile & build bundle 'ES6' into pure 'ES5'script, using Babel
 gulp.task('scripts', () => {
-    gulp.src(`${themePath}${src.scripts}/**/*.js`, {read: false})
-        // .pipe(newer(`${themePath}${dest.scripts}`))
+    gulp.src(`${frontendPath}${src.scripts}/**/*.js`, {read: false})
+        // .pipe(newer(`${frontendPath}${dest.scripts}`))
         .pipe(tap(function (file) {
             gutil.log('bundling ' + file.path);
             file.contents = browserify(file.path, {debug: true})
@@ -36,12 +36,12 @@ gulp.task('scripts', () => {
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(`${themePath}${dest.scripts}`));
+        .pipe(gulp.dest(`${frontendPath}${dest.scripts}`));
 });
 
 // Add scripts watcher
 gulp.task('scripts:w', ['scripts'], () => {
-    gulp.watch(`${themePath}${src.scripts}/**/*.js`, ['scripts'])
+    gulp.watch(`${frontendPath}${src.scripts}/**/*.js`, ['scripts'])
         .on('change', (file) => {
             console.log(`File ${file.path} was ${file.type}, running 'scripts' task...`);
         });
@@ -49,21 +49,21 @@ gulp.task('scripts:w', ['scripts'], () => {
 
 // Clean scripts destination directory
 gulp.task('scripts:c', () => {
-    gulp.src(themePath + dest.scripts)
+    gulp.src(frontendPath + dest.scripts)
         .pipe(clean({force: true}));
 });
 
 // Compile & build 'css', using SASS source
 gulp.task('styles', () => {
-    gulp.src(`${themePath}${src.styles}/**/*.scss`)
+    gulp.src(`${frontendPath}${src.styles}/**/*.scss`)
         .pipe(sass({includePaths: 'bower_components/compass-mixins/lib', outputStyle: 'compressed'}))
         .pipe(autoprefixer())
-        .pipe(gulp.dest(`${themePath}${dest.styles}/`));
+        .pipe(gulp.dest(`${frontendPath}${dest.styles}/`));
 });
 
 // Add styles watcher
 gulp.task('styles:w', ['styles'], () => {
-    gulp.watch(`${themePath}${src.styles}/**/*.scss`, ['styles'])
+    gulp.watch(`${frontendPath}${src.styles}/**/*.scss`, ['styles'])
         .on('change', (file) => {
             console.log(`File ${file.path} was ${file.type}, running 'styles' task...`);
         });
