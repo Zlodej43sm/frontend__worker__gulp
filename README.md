@@ -7,7 +7,7 @@ Gulp, Babel, SASS
 Set you theme path in 'themePath' (gulp.babel.js), src & dest.
 Example:
 ```javascript
-const themePath = '../skin/frontend/youTheme/youPackage';
+const themePath = 'youFrontendTheme';
 const src = {
     scripts: '/scripts/source',
     styles: '/styles/source'
