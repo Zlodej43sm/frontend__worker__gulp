@@ -2,20 +2,19 @@
 Gulp, Babel, SASS, PostCSS
 
 ### Usage
+```bash
+npm install
+```
 
 #### Theme setup
-Set you frontend path in 'frontendPath' (gulp.babel.js), src & dest.
+Set you frontend path in 'PROJECT_PATH' (gulp.babel.js), src & dest.
 Example:
 ```javascript
-const frontendPath = 'youFrontendTheme';
-const src = {
-    scripts: '/scripts/source',
-    styles: '/styles/source'
-};
-const dest = {
-    scripts: '/scripts/compiled',
-    styles: '/styles/compiled'
-};
+const PROJECT_PATH = './example',
+    STYLES_SRC = '/css/stylus',
+    STYLES_DEST = '/css/compiled',
+    SCRIPTS_SRC = '/js/source',
+    SCRIPTS_DEST = '/js/compiled';
 ```
 
 #### Tasks
