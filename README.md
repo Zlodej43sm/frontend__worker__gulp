@@ -10,7 +10,7 @@ npm install
 Set you frontend path in 'PROJECT_PATH' (gulp.babel.js), src & dest.
 Example:
 ```javascript
-const PROJECT_PATH = './example',
+const PROJECT_PATH = 'yourFrontendTheme',
     STYLES_SRC = '/css/stylus',
     STYLES_DEST = '/css/compiled',
     SCRIPTS_SRC = '/js/source',
