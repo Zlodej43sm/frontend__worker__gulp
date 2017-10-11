@@ -19,6 +19,12 @@ const PROJECT_PATH = 'yourFrontendTheme',
 
 #### Tasks
 ```bash
+## Run in development mode
+npm run dev
+
+## Run in production mode
+npm run build
+
 ## build styles & scripts
 gulp build
 
