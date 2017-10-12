@@ -9,10 +9,12 @@ import uglify from 'gulp-uglify';
 import buffer from 'gulp-buffer';
 import postcss from 'gulp-postcss';
 import sourcemaps from 'gulp-sourcemaps';
+import autoprefixer from 'gulp-autoprefixer';
 
-const PROJECT_PATH = './example',
-    STYLES_SRC = '/css/scss',
-    STYLES_DEST = '/css/compiled',
+const NODE_ENV = process.env.NODE_ENV || 'development',
+    PROJECT_PATH = 'projectPath',
+    STYLES_SRC = '/scss',
+    STYLES_DEST = '/css',
     SCRIPTS_SRC = '/js/source',
     SCRIPTS_DEST = '/js/compiled';
 
@@ -21,7 +23,7 @@ let processors = [
         require("postcss-cssnext")(),
         require("cssnano")({ autoprefixer: false }),
         require("postcss-browser-reporter")(),
-        require("postcss-reporter")(),
+        require("postcss-reporter")()
     ],
     presets = [
         require("babel-preset-env")
@@ -29,18 +31,31 @@ let processors = [
 
 // Compile & build bundle 'ES6' into pure 'ES5'script, using Babel
 gulp.task('scripts', () => {
-    gulp.src(`${PROJECT_PATH}${SCRIPTS_SRC}/**/*.js`, {read: false})
+    let scripts = gulp.src(`${PROJECT_PATH}${SCRIPTS_SRC}/**/*.js`, {read: false})
         .pipe(tap(function (file) {
             gutil.log('bundling ' + file.path);
             file.contents = browserify(file.path, {debug: true})
                 .transform(babelify, {presets: presets})
                 .bundle();
         }))
-        .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(uglify())
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(`${PROJECT_PATH}${SCRIPTS_DEST}`));
+        .pipe(buffer());
+
+    if (NODE_ENV === 'development') {
+        scripts.pipe(
+                sourcemaps.init(
+                    {
+                        loadMaps: true
+                    }
+                )
+            )
+            .pipe(sourcemaps.write('.'));
+    }
+
+    if (NODE_ENV === 'production') {
+        scripts.pipe(uglify())
+    }
+
+    scripts.pipe(gulp.dest(`${PROJECT_PATH}${SCRIPTS_DEST}`));
 });
 
 // Add scripts watcher
@@ -59,10 +74,24 @@ gulp.task('scripts:c', () => {
 
 // Compile & build 'css', using SASS source
 gulp.task('styles', () => {
-    gulp.src(`${PROJECT_PATH}${STYLES_SRC}/**/*.scss`)
+    let styles = gulp.src(`${PROJECT_PATH}${STYLES_SRC}/**/*.scss`)
         .pipe(sass({includePaths: 'bower_components/compass-mixins/lib', outputStyle: 'compressed'}))
-        .pipe(postcss(processors))
-        .pipe(gulp.dest(`${PROJECT_PATH}${STYLES_DEST}/`));
+        // .pipe(postcss(processors))
+        .pipe(autoprefixer());
+
+
+    if (NODE_ENV === 'development') {
+        styles.pipe(
+                sourcemaps.init(
+                    {
+                        loadMaps: true
+                    }
+                )
+            )
+            .pipe(sourcemaps.write('.'));
+    }
+
+    styles.pipe(gulp.dest(`${PROJECT_PATH}${STYLES_DEST}/`));
 });
 
 // Add styles watcher
